@@ -20,3 +20,10 @@ class User(db.Model):
     last_name = db.Column(db.String(15), nullable = False)
     image_url = db.Column(db.String)
     
+    def update_user(self, username, f_name, l_name, img_url):
+        self.username = username
+        self.first_name = f_name
+        self.last_name = l_name
+        self.image_url = img_url
+    
+    

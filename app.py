@@ -20,15 +20,19 @@ connect_db(app)
 @app.route('/')
 def homepage():
     users = User.query.all()
+    return redirect('/users')
+
+@app.route('/users')
+def user_list():
+    users = User.query.all()
     return render_template('user_list.html', users=users)
 
-
-@app.route('/create')
+@app.route('/users/new')
 def create_user():
     return render_template('create.html')
 
 
-@app.route('/create', methods=['POST'])
+@app.route('/users/new', methods=['POST'])
 def submit_new_user():
     first = request.form['f_name']
     last = request.form['l_name']
@@ -40,10 +44,34 @@ def submit_new_user():
     print(new_user.id)
     db.session.add(new_user)
     db.session.commit()
-    return redirect(f'/user_detail/{new_user.id}')
+    return redirect(f'/users/{new_user.id}')
 
 
-@app.route('/user_detail/<int:user_id>')
+@app.route('/users/<int:user_id>')
 def user_detail(user_id):
     selected_user = User.query.get(user_id)
-    return render_template('user_detail.html', user=selected_user)
+    return render_template('user_detail.html', user=selected_user) 
+
+@app.route('/users/<int:user_id>/edit')
+def edit_user_page(user_id):
+    selected_user = User.query.get(user_id)
+    return render_template('edit_user.html', user=selected_user)
+
+
+@app.route('/users/<int:user_id>/edit', methods = ['POST'])
+def submit_user_edit(user_id):
+    first = request.form['f_name']
+    last = request.form['l_name']
+    image = request.form['img_url']
+    username = request.form['username']
+    selected_user = User.query.get(user_id)
+    selected_user.update_user(username, first, last, image)
+    db.session.add(selected_user)
+    db.session.commit()
+    return redirect(f'/users/{user_id}')
+
+@app.route('/users/<int:user_id>/delete', methods = ['POST'])
+def delete_user(user_id):
+    User.query.filter_by(id=user_id).delete()
+    db.session.commit()
+    return redirect('/users')
