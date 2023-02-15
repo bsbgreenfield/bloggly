@@ -103,3 +103,20 @@ def delete_post(post_id):
     Post.query.filter_by(id=post_id).delete()
     db.session.commit()
     return redirect(f'/users/{user_id}')
+
+@app.route('/posts/<int:post_id>/edit')
+def edit_post_page(post_id):
+    selected_post = Post.query.get_or_404(post_id)
+    selected_user = selected_post.posting_user
+    return render_template('make_post.html', post=selected_post, user = selected_user)
+
+@app.route('/posts/<int:post_id>/edit', methods = ['POST'])
+def submit_edited_post(post_id):
+    selected_post = Post.query.get_or_404(post_id)
+    user_id = selected_post.poster
+    title = request.form['title']
+    content = request.form['content']
+    selected_post.update_post(title, content)
+    db.session.add(selected_post)
+    db.session.commit()
+    return redirect(f'/users/{user_id}')

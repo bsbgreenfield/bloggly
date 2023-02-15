@@ -39,4 +39,8 @@ class Post(db.Model):
     created_at = db.Column(db.DateTime, default = datetime.utcnow())
     poster = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    def update_post(self, title, content):
+        self.title = title
+        self.content = content
+
     posting_user = db.relationship('User', backref = 'posts')

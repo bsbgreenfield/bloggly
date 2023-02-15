@@ -2,5 +2,8 @@
 {%block content%}
 <h1>{{post.title}}</h1>
 <p>{{post.content}}</p>
-<h6>Posted by: {{post.posting_user.username}}</h6>
+<h6>Posted by: <a href="/users/{{post.poster}}">{{post.posting_user.username}}</a></h6>
+<form action="/posts/{{post.id}}/edit">
+    <button type="submit">Edit Post</button>
+</form>
 {%endblock%}
