@@ -1,6 +1,6 @@
 from flask import Flask, request, redirect, render_template, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, User, connect_db
+from models import db, User, Post, connect_db
 
 app = Flask(__name__)
 
@@ -50,7 +50,8 @@ def submit_new_user():
 @app.route('/users/<int:user_id>')
 def user_detail(user_id):
     selected_user = User.query.get(user_id)
-    return render_template('user_detail.html', user=selected_user) 
+    posts = Post.query.filter(Post.poster == user_id)
+    return render_template('user_detail.html', user=selected_user, posts=posts) 
 
 @app.route('/users/<int:user_id>/edit')
 def edit_user_page(user_id):
@@ -75,3 +76,30 @@ def delete_user(user_id):
     User.query.filter_by(id=user_id).delete()
     db.session.commit()
     return redirect('/users')
+
+@app.route('/users/<int:user_id>/post')
+def make_post(user_id):
+    selected_user = User.query.get(user_id)
+    return render_template('make_post.html', user=selected_user)
+
+@app.route('/users/<int:user_id>/post', methods = ['POST'])
+def send_post(user_id):
+    title = request.form['title']
+    content = request.form['content']
+    new_post = Post(title = title, content = content, poster = user_id)
+    db.session.add(new_post)
+    db.session.commit()
+    return redirect(f'/users/{user_id}')
+
+@app.route('/posts/<int:post_id>')
+def view_post(post_id):
+    selected_post = Post.query.get_or_404(post_id)
+    return render_template('posts.html', post=selected_post)
+
+@app.route('/posts/<int:post_id>/delete', methods = ['POST'])
+def delete_post(post_id):
+    selected_post = Post.query.get(post_id)
+    user_id = selected_post.poster
+    Post.query.filter_by(id=post_id).delete()
+    db.session.commit()
+    return redirect(f'/users/{user_id}')

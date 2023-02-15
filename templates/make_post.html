@@ -1,0 +1,17 @@
+{%extends 'base.html' %}
+{%block content%}
+<h1>Create a new post for {{user.username}}</h1>
+<form action="/users/{{user.id}}/post" method="POST">
+    <span>
+        Title 
+        <input type="text" name="title">
+    </span>
+    <span>
+        Content
+        <textarea name="content" cols="30" rows="10">
+
+        </textarea>
+    </span>
+    <button type="submit">Create Post</button>
+</form>
+{%endblock%}
