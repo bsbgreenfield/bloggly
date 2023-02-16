@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, render_template, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, User, Post, Tag, PostTag, connect_db
+from forms import AddTagForm
 
 app = Flask(__name__)
 
@@ -116,14 +117,15 @@ def delete_post(post_id):
 
 @app.route('/posts/<int:post_id>/edit')
 def edit_post_page(post_id):
+    tagform = AddTagForm()
+    tagform.tag.choices = [(tag.id, tag.name) for tag in Tag.query.all()]
     selected_post = Post.query.get_or_404(post_id)
     selected_user = selected_post.posting_user
     tags = selected_post.tags
-    all_tags = Tag.query.all()
     return render_template('edit_post.html', post=selected_post,
                            user=selected_user,
                            tags=tags,
-                           all_tags=all_tags)
+                           form = tagform)
 
 
 @app.route('/posts/<int:post_id>/edit', methods=['POST'])
@@ -166,20 +168,19 @@ def view_tag(tag_id):
 
 @app.route('/posts/<int:post_id>/attach_tag', methods=['POST'])
 def attach_tag(post_id):
-    tagname = request.form['tag']
-    selected_post = Post.query.get(post_id)
-    existing_tag = Tag.query.filter(Tag.name.ilike(f'%{tagname}')).first()
-    if existing_tag in selected_post.tags:
-        flash("This post already has that tag!")
-        return redirect(f'/posts/{post_id}/edit')
-    elif existing_tag != None:
-        selected_post.tags.append(existing_tag)
-        db.session.add(selected_post)
-        db.session.commit()
-        return redirect(f'/posts/{post_id}/edit')
-    else:
-        flash("Tag not found!")
-        return redirect(f'/posts/{post_id}/edit')
+    tagform = AddTagForm()
+    tagform.tag.choices = [(tag.id, tag.name) for tag in Tag.query.all()]
+    if tagform.validate_on_submit():
+        selected_tag = Tag.query.get(tagform.tag.data)
+        selected_post = Post.query.get(post_id)
+        if selected_tag not in selected_post.tags:
+            selected_post.tags.append(selected_tag)
+            db.session.add(selected_post)
+            db.session.commit()
+        else:
+            flash("tag already in use for this post!")
+    return redirect(f'/posts/{post_id}/edit')
+
 
 
 @app.route('/posts/<int:post_id>/remove_tag/<int:tag_id>', methods=['POST'])

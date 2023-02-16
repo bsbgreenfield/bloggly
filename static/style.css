@@ -125,8 +125,6 @@ justify-content: center;
 }
 
 .remove{
-    height: 70px;
-    width: 110px;
     border-radius: 50%;
     border-color: white;
     background-color: rgb(244, 129, 91);
@@ -158,11 +156,15 @@ footer{
 }
 .delete{
     padding: 4px 4px 4px 4px;
-    margin-left: 3px;
-    border-radius: 50%;
+    margin-left: 8px;
+    border-radius: 40%;
+    height: 20px;
     border-color: white;
     background-color: rgb(244, 129, 91);
+    cursor: pointer;
+    font-size: 10px;
 }
+
 #add-post-button{
     text-align: center;
 }

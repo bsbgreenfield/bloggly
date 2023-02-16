@@ -2,7 +2,7 @@
 {%block content%}
 <h1>{{user.username}}'s post</h1>
 {% for message in get_flashed_messages() %}
-<p style="background-color: rgb(226, 110, 110);">{{message}}<a href="/tags/add">Click Here to add new Tag</a></p>
+<p>{{message}}<a href="/tags/add">   Click Here to add new Tag</a></p>
 {%endfor%}
 <div id="edit-post-cont">
 {% if post is defined %}
@@ -10,7 +10,6 @@
     <div>
         Title 
         <input type="text" name="title" value = '{{post.title}}'>
-        <input type="text" name="title">
     </div>
     <div>
         Content
@@ -46,7 +45,7 @@
                     <span><a href="/tags/{{tag.id}}">{{tag.name}}</a></span>
                     <span>
                     <form action="/posts/{{post.id}}/remove_tag/{{tag.id}}" method="POST">
-                        <button class="delete">Remove</button>
+                        <button class="delete">X</button>
                     </form>
                 </span>
                 </div>
@@ -55,27 +54,27 @@
         </ul>
     </div>
     {% if post is defined %}
-    <div>
-        Add Tags:
-        <form action="/posts/{{post.id}}/attach_tag" method="POST">
-            <input type="text" placeholder="tagname" name="tag">
-            <button type="submit">Add</button>
-        </form>
-    </div>
-    
+    <form id="snack-add-form" action="/posts/{{post.id}}/attach_tag" method="POST">
+        {{ form.hidden_tag() }} <!--add type=hidden form fields -->
+      
+        {% for field in form
+               if field.widget.input_type != 'hidden' %}
+      
+          <p>
+            {{ field.label }}
+            {{ field }}
+      
+            {% for error in field.errors %}
+              {{ error }}
+            {% endfor %}
+          </p>
+      
+        {% endfor %}
+      
+        <button type="submit" class="submit">Add</button>
+      </form>
     {% else %}
 
-    {% endif %}
-           
+    {% endif %}         
 </div>
-<footer> 
-    Available Tags
-    <div>
-        {% for tag in all_tags %}
-        <div id="available-tags">
-           | {{tag.name}} |
-        </div>
-        {% endfor %}
-    </div>
-</footer>
     {%endblock%}
