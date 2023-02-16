@@ -78,7 +78,11 @@ def submit_user_edit(user_id):
 
 @app.route('/users/<int:user_id>/delete', methods=['POST'])
 def delete_user(user_id):
-    User.query.filter_by(id=user_id).delete()
+    posts = User.query.get(user_id).posts
+    for post in posts:
+        post.poster = None
+        db.session.add(post)
+    User.query.filter(User.id == user_id).delete()
     db.session.commit()
     return redirect('/users')
 
