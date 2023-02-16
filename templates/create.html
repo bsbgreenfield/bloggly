@@ -1,24 +1,32 @@
 {%extends 'base.html' %}
 {%block content%}
-<h1>Add a New User!</h1>
+<div id="create-user">
+    <h1 id="new-user-msg">Add a New User!</h1>
+    <div id="create-form">
+        <form action="/users/new" method="POST">
+            <div>
+                User Name
+                <input type="text" name="username" id="username" placeholder="Enter Username">
+            </div>
+            <div>
+                First Name
+                <input type="text" name="f_name" id="f_name" placeholder="Enter a First Name">
+            </div>
+            <div>
+                Last Name
+                <input type="text" name="l_name" id="l_name" placeholder="Enter a Last Name">
+            </div>
+            <div>
+                Image Url
+                <input type="text" name="img_url" id="img_url" placeholder="provide an image url">
+            </div>
+            <div id="btn-container">
+                <button class="submit">submit</button>
+            </div>
+           
+        </form>
+    </div>
+   
+</div>
 
-<form action="/users/new" method="POST">
-    <div>
-        User Name
-        <input type="text" name="username" id="username" placeholder="Enter Username">
-    </div>
-    <div>
-        First Name
-        <input type="text" name="f_name" id="f_name" placeholder="Enter a First Name">
-    </div>
-    <div>
-        Last Name
-        <input type="text" name="l_name" id="l_name" placeholder="Enter a Last Name">
-    </div>
-    <div>
-        Image Url
-        <input type="text" name="img_url" id="img_url" placeholder="provide an image url">
-    </div>
-    <button>submit</button>
-</form>
 {%endblock%}

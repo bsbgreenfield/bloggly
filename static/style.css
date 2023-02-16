@@ -1,0 +1,172 @@
+#user-list-h1 {
+    text-align: center;
+    margin-right: 2cm;
+    font-size: 95px;
+    font-family: American Typewriter, serif;
+    font-weight: 349;
+    font-style: italic;
+}
+body{
+    background-color: rgba(179, 211, 201, 0.933);
+}
+#user_list{
+    list-style: none;
+    margin-top: 2cm;
+}
+#user_list li a{
+    font-size: 50px;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    padding-left: 8px;
+    padding-right: 8px;
+}
+#user_list li{
+    height: fit-content;
+    border: 2px solid rgb(244, 201, 91);
+    margin-bottom: 2cm;
+    background-color: rgb(253, 251, 228);
+}
+#user-list-container{
+display: flex;
+width: 80%;
+justify-content: center;
+}
+#navbar{
+    display: flex;
+    height: 35px;
+    justify-content: space-evenly;
+    background-color: grey;
+}
+#navbar span a{
+    font-size: 25px;
+    text-decoration: none;
+    color: white;
+    font-family: American Typewriter, serif;
+}
+#navbar span{
+    padding-top: 3px;
+}
+#create-user{
+    display: flex;
+}
+#create-form{
+    display: flex;
+    font-size: 40px;
+    margin-top: 10%;
+}
+#create-form div{
+    height: 70px;
+    padding: 10px 10px 20px 10px;
+}
+#create-form input{
+    font-size: 25px;
+    font-family: American Typewriter, serif;
+    border: 2px solid rgb(244, 201, 91);
+    margin-bottom: 10px;
+}
+#new-user-msg{
+    margin-right: 1cm;
+    font-size: 75px;
+}
+.submit{
+    height: 38px;
+    width: 85px;
+    border-radius: 50%;
+    border-color: white;
+    background-color: rgb(244, 201, 91);
+    font-size: 20px;
+    font-style: italic;
+    cursor: pointer;
+}
+#btn-container{
+    text-align: right;
+    margin-right: 10%;
+}
+.fancy-text{
+    color: rgb(198, 171, 103);
+    font-weight: 400;
+}
+#user-info {
+    list-style:none;
+    padding-top: 0px;
+}
+#user-detail-h1{
+    text-align: center;
+    margin-right: 2cm;
+    font-size: 95px;
+    font-family: American Typewriter, serif;
+    font-weight: 349;
+    font-style: italic; 
+}
+#user-info li{
+    padding-bottom: 1cm;
+}
+
+#user-detail-cont{
+    font-size: 40px;
+    font-family: American Typewriter, serif ;
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center;
+}
+.post-list{
+    font-size: 20px ;
+}
+
+.edit{
+    height: 70px;
+    width: 110px;
+    border-radius: 50%;
+    border-color: white;
+    background-color: rgb(120, 186, 69);
+    font-size: 20px;
+    font-style: italic;
+    cursor: pointer;
+}
+
+.remove{
+    height: 70px;
+    width: 110px;
+    border-radius: 50%;
+    border-color: white;
+    background-color: rgb(244, 129, 91);
+    font-size: 20px;
+    font-style: italic;
+    cursor: pointer;
+}
+
+.new-postform{
+    display: flex;
+    justify-content: space-evenly;
+}
+.title{
+    margin-bottom: 10px;
+}
+
+#edit-post-cont{
+    display: flex;
+    justify-content: space-evenly;
+}
+footer{
+    text-align: center;
+}
+.li-remove{
+    display: flex;
+}
+.li-remove a{
+    color: black;
+}
+.delete{
+    padding: 4px 4px 4px 4px;
+    margin-left: 3px;
+    border-radius: 50%;
+    border-color: white;
+    background-color: rgb(244, 129, 91);
+}
+#add-post-button{
+    text-align: center;
+}
+#available-tags{
+    display: inline;
+    font-size: 20px;
+}

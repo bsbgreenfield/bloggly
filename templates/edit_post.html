@@ -1,38 +1,52 @@
 {%extends 'base.html' %}
 {%block content%}
-<h1>Edit Post Made By {{user.username}}</h1>
+<h1>{{user.username}}'s post</h1>
 {% for message in get_flashed_messages() %}
 <p style="background-color: rgb(226, 110, 110);">{{message}}<a href="/tags/add">Click Here to add new Tag</a></p>
 {%endfor%}
+<div id="edit-post-cont">
+{% if post is defined %}
 <form action="/posts/{{post.id}}/edit" method="POST">
-    <span>
+    <div>
         Title 
-        {%if post %}
-        <input type="text" name="title" value = {{post.title}}>
-        {%else%}
+        <input type="text" name="title" value = '{{post.title}}'>
         <input type="text" name="title">
-        {%endif%}
-    </span>
-    <span>
+    </div>
+    <div>
         Content
         <textarea name="content" cols="30" rows="10" >
-            {%if post%}
             {{post.content}}
-            {%endif%}
         </textarea>
-    </span>
+    </div>
     <button type="submit">Submit Edit</button>
 </form>
+{% else %}
+<div class = 'new-postform'>
+    <form action="/users/{{user.id}}/post" method="POST">
+        Title
+        <div class="title">
+            <input type="text" name="title">
+        </div>
+        Content
+        <div>
+            <textarea name="content" cols="40" rows="5" id="new-text-area">
+            </textarea>
+        </div>
+        <button type="submit" class="edit">Submit Edit</button>
+    </form>
+</div>
+
+{% endif %}
     <div>
         Tags:
         <ul>
             {%for tag in tags%}
             <li>
-                <div>
+                <div class="li-remove">
                     <span><a href="/tags/{{tag.id}}">{{tag.name}}</a></span>
                     <span>
                     <form action="/posts/{{post.id}}/remove_tag/{{tag.id}}" method="POST">
-                        <button>Remove</button>
+                        <button class="delete">Remove</button>
                     </form>
                 </span>
                 </div>
@@ -40,6 +54,7 @@
             {%endfor%}
         </ul>
     </div>
+    {% if post is defined %}
     <div>
         Add Tags:
         <form action="/posts/{{post.id}}/attach_tag" method="POST">
@@ -47,12 +62,20 @@
             <button type="submit">Add</button>
         </form>
     </div>
+    
+    {% else %}
+
+    {% endif %}
+           
+</div>
+<footer> 
+    Available Tags
     <div>
-            <ul style="list-style: none">
-                Available Tags:
-                {% for tag in all_tags %}
-                <li style="text-decoration: underline;">{{tag.name}}</li>
-                {%endfor%}
-            </ul>   
+        {% for tag in all_tags %}
+        <div id="available-tags">
+           | {{tag.name}} |
+        </div>
+        {% endfor %}
     </div>
+</footer>
     {%endblock%}

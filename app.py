@@ -120,10 +120,10 @@ def edit_post_page(post_id):
     selected_user = selected_post.posting_user
     tags = selected_post.tags
     all_tags = Tag.query.all()
-    return render_template('edit_post.html', post=selected_post, 
-                           user=selected_user, 
-                           tags=tags, 
-                           all_tags = all_tags)
+    return render_template('edit_post.html', post=selected_post,
+                           user=selected_user,
+                           tags=tags,
+                           all_tags=all_tags)
 
 
 @app.route('/posts/<int:post_id>/edit', methods=['POST'])
@@ -141,27 +141,30 @@ def submit_edited_post(post_id):
 @app.route('/tags/list')
 def view_tags():
     tags = Tag.query.all()
-    return render_template('tags_list.html', tags = tags)
+    return render_template('tags_list.html', tags=tags)
+
 
 @app.route('/tags/add')
 def view_add_tag():
     return render_template('add_tag.html')
 
-@app.route('/tags/add', methods = ['POST'])
+
+@app.route('/tags/add', methods=['POST'])
 def submit_new_tag():
     tagname = request.form['tagname']
-    new_tag = Tag(name = tagname)
+    new_tag = Tag(name=tagname)
     db.session.add(new_tag)
     db.session.commit()
     return redirect(f'/tags/{new_tag.id}')
 
+
 @app.route('/tags/<int:tag_id>')
 def view_tag(tag_id):
     selected_tag = Tag.query.get(tag_id)
-    return render_template('tag.html', tag = selected_tag)
+    return render_template('tag.html', tag=selected_tag)
 
 
-@app.route('/posts/<int:post_id>/attach_tag', methods = ['POST'])
+@app.route('/posts/<int:post_id>/attach_tag', methods=['POST'])
 def attach_tag(post_id):
     tagname = request.form['tag']
     selected_post = Post.query.get(post_id)
@@ -177,8 +180,9 @@ def attach_tag(post_id):
     else:
         flash("Tag not found!")
         return redirect(f'/posts/{post_id}/edit')
-    
-@app.route('/posts/<int:post_id>/remove_tag/<int:tag_id>', methods = ['POST'])
+
+
+@app.route('/posts/<int:post_id>/remove_tag/<int:tag_id>', methods=['POST'])
 def remove_tag(post_id, tag_id):
     selected_post = Post.query.get(post_id)
     tag_goner = Tag.query.get(tag_id)
@@ -186,7 +190,3 @@ def remove_tag(post_id, tag_id):
     db.session.add(selected_post)
     db.session.commit()
     return redirect(f'/posts/{post_id}/edit')
-
-    
-    
-
