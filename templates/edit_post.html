@@ -1,0 +1,58 @@
+{%extends 'base.html' %}
+{%block content%}
+<h1>Edit Post Made By {{user.username}}</h1>
+{% for message in get_flashed_messages() %}
+<p style="background-color: rgb(226, 110, 110);">{{message}}<a href="/tags/add">Click Here to add new Tag</a></p>
+{%endfor%}
+<form action="/posts/{{post.id}}/edit" method="POST">
+    <span>
+        Title 
+        {%if post %}
+        <input type="text" name="title" value = {{post.title}}>
+        {%else%}
+        <input type="text" name="title">
+        {%endif%}
+    </span>
+    <span>
+        Content
+        <textarea name="content" cols="30" rows="10" >
+            {%if post%}
+            {{post.content}}
+            {%endif%}
+        </textarea>
+    </span>
+    <button type="submit">Submit Edit</button>
+</form>
+    <div>
+        Tags:
+        <ul>
+            {%for tag in tags%}
+            <li>
+                <div>
+                    <span><a href="/tags/{{tag.id}}">{{tag.name}}</a></span>
+                    <span>
+                    <form action="/posts/{{post.id}}/remove_tag/{{tag.id}}" method="POST">
+                        <button>Remove</button>
+                    </form>
+                </span>
+                </div>
+            </li>
+            {%endfor%}
+        </ul>
+    </div>
+    <div>
+        Add Tags:
+        <form action="/posts/{{post.id}}/attach_tag" method="POST">
+            <input type="text" placeholder="tagname" name="tag">
+            <button type="submit">Add</button>
+        </form>
+    </div>
+    <div>
+            <ul style="list-style: none">
+                Available Tags:
+                {% for tag in all_tags %}
+                <li style="text-decoration: underline;">{{tag.name}}</li>
+                {%endfor%}
+            </ul>   
+    </div>
+    {%endblock%}
