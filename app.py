@@ -101,9 +101,11 @@ def send_post(user_id):
 
 @app.route('/posts/<int:post_id>')
 def view_post(post_id):
+    tagform = AddTagForm()
+    tagform.tag.choices = [(tag.id, tag.name) for tag in Tag.query.all()]
     selected_post = Post.query.get_or_404(post_id)
     tags = selected_post.tags
-    return render_template('posts.html', post=selected_post, tags=tags)
+    return render_template('posts.html', post=selected_post, tags=tags, form = tagform)
 
 
 @app.route('/posts/<int:post_id>/delete', methods=['POST'])
@@ -179,6 +181,8 @@ def attach_tag(post_id):
             db.session.commit()
         else:
             flash("tag already in use for this post!")
+    if 'static-add-tag' in request.form:
+        return redirect(f'/posts/{post_id}')
     return redirect(f'/posts/{post_id}/edit')
 
 

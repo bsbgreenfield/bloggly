@@ -172,3 +172,11 @@ footer{
     display: inline;
     font-size: 20px;
 }
+#post-text{
+    margin-left: 30%;
+    justify-content: center;
+}
+.clean-li a{
+    color: black;
+    font-size: 25px;
+}
