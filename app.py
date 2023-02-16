@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, render_template, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, User, Post, Tag, PostTag, connect_db
+from forms import AddTagForm
 
 app = Flask(__name__)
 

@@ -4,7 +4,10 @@
     Tags:
     {%for tag in tags%}
     <li>
-        <a href="/tags/{{tag.id}}">{{tag.name}}</a>
+        <div class="tag-list">
+            <a href="/tags/{{tag.id}}">{{tag.name}}</a>
+        </div>
+        
     </li>
     {%endfor%}
     </div>
@@ -12,7 +15,7 @@
 <p>{{post.content}}</p>
 <h6>Posted by: <a href="/users/{{post.poster}}">{{post.posting_user.username}}</a></h6>
 <form action="/posts/{{post.id}}/edit">
-    <button type="submit">Edit Post</button>
+    <button type="submit" class="edit">Edit Post</button>
 </form>
 
 

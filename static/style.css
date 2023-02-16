@@ -170,3 +170,10 @@ footer{
     display: inline;
     font-size: 20px;
 }
+.tag-list{
+    display: flex;
+    margin-left: 25px;
+}
+.tag-list a{
+    color: black;
+}
